@@ -1,21 +1,72 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
 <router-outlet></router-outlet>
+<div class="container">
+
+  <h1>Match Validation</h1>
+  <div class="row">
+    <div class="col-6">
+      <form [formGroup]="registrationFormGroup" (ngSubmit)="onClickRegister()">
+
+        <div class="form-group">
+          <label for="usernamme">Username</label>
+          <input class="form-control" type="text" name="username" formControlName="username" />
+
+          <p class="bg-danger" *ngIf="registrationFormGroup.controls.username.errors?.required && registrationFormGroup.controls.username.touched">
+            Username is required
+          </p>
+        </div>
+        <div [formGroup]="emailFormGroup">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" name="email" formControlName="email">
+
+            <p class="bg-danger" *ngIf="emailFormGroup.controls.email.errors?.required && emailFormGroup.controls.email.touched">
+              Email is required
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="confirmEmail">Repeat Email</label>
+            <input class="form-control" type="email" name="confirmEmail" formControlName="confirmEmail">
+
+            <p class="bg-danger" *ngIf="emailFormGroup.controls.confirmEmail.errors?.required && emailFormGroup.controls.confirmEmail.touched">
+              Confirm Email is required
+            </p>
+            <p class="bg-danger" *ngIf="emailFormGroup.errors?.doesMatchEmail">
+              Email does not match
+            </p>
+          </div>
+        </div>
+
+        <div [formGroup]="passwordFormGroup">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" formControlName="password">
+
+            <p class="bg-danger" *ngIf="passwordFormGroup.controls.password.errors?.required && passwordFormGroup.controls.password.touched">
+              Password is required
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="repeatPassword">Repeat Password</label>
+            <input class="form-control" type="password" name="repeatPassword" formControlName="repeatPassword">
+
+            <p class="bg-danger" *ngIf="passwordFormGroup.controls.repeatPassword.errors?.required && passwordFormGroup.controls.repeatPassword.touched">
+              Repeat password is required
+            </p>
+            <p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword">
+              Password does not match
+            </p>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <button class="form-control btn btn-primary" type="submit">Register</button>
+        </div>
+
+      </form>
+    </div>
+    <div class="col-6">
+      <pre>{{ formValues | json }}</pre>
+    </div>
+  </div>
+</div>
